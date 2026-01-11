@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Routine Fall Final</title>
+  <style>
+    :root {
+      --bg: #f4f6f8;
+      --card: #ffffff;
+      --text: #111827;
+      --primary: #1e40af;
+      --muted: #6b7280;
+    }
+
+    body.dark {
+      --bg: #0f172a;
+      --card: #1e293b;
+      --text: #e5e7eb;
+      --primary: #60a5fa;
+      --muted: #9ca3af;
+    }
+
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      margin: 0;
+      padding: 0;
+      transition: background 0.3s, color 0.3s;
+    }
+
+    header {
+      background: var(--primary);
+      color: white;
+      padding: 18px;
+      text-align: center;
+      position: sticky;
+      top: 0;
+    }
+
+    .toggle {
+      position: absolute;
+      right: 15px;
+      top: 15px;
+      background: rgba(255,255,255,0.2);
+      border: none;
+      color: white;
+      padding: 6px 10px;
+      border-radius: 20px;
+      cursor: pointer;
+    }
+
+    .container {
+      max-width: 500px;
+      margin: 20px auto;
+      padding: 15px;
+    }
+
+    .card {
+      background: var(--card);
+      border-radius: 14px;
+      padding: 15px;
+      margin-bottom: 15px;
+      box-shadow: 0 6px 16px rgba(0,0,0,0.15);
+    }
+
+    .course {
+      font-weight: 600;
+      margin-bottom: 6px;
+    }
+
+    .meta {
+      font-size: 14px;
+      color: var(--muted);
+    }
+
+    .countdown {
+      margin-top: 10px;
+      font-size: 15px;
+      font-weight: bold;
+      color: var(--primary);
+    }
+
+    footer {
+      text-align: center;
+      padding: 15px;
+      font-size: 13px;
+      color: var(--muted);
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>Routine Fall Final</h1>
+    <p>AIUB Final Exam Schedule</p>
+    <button class="toggle" onclick="toggleDark()">🌙</button>
+  </header>
+
+  <div class="container">
+
+    <div class="card" data-date="2026-01-12T15:00:00">
+      <div class="course">Object Oriented Analysis and Design</div>
+      <div class="meta">Jan 12, 2026 • Monday • 3:00–5:00 PM</div>
+      <div class="countdown"></div>
+    </div>
+
+    <div class="card" data-date="2026-01-14T12:00:00">
+      <div class="course">Numerical Methods for Science and Engineering</div>
+      <div class="meta">Jan 14, 2026 • Wednesday • 12:00–2:00 PM</div>
+      <div class="countdown"></div>
+    </div>
+
+    <div class="card" data-date="2026-01-15T12:00:00">
+      <div class="course">Data Structure</div>
+      <div class="meta">Jan 15, 2026 • Thursday • 12:00–2:00 PM</div>
+      <div class="countdown"></div>
+    </div>
+
+    <div class="card" data-date="2026-01-15T15:00:00">
+      <div class="course">Business Communication (FST/FE)</div>
+      <div class="meta">Jan 15, 2026 • Thursday • 3:00–5:00 PM</div>
+      <div class="countdown"></div>
+    </div>
+
+  </div>
+
+  <footer>
+    © 2026 Routine Fall Final
+  </footer>
+
+  <script>
+    function toggleDark() {
+      document.body.classList.toggle('dark');
+    }
+
+    function updateCountdowns() {
+      const now = new Date();
+      document.querySelectorAll('.card').forEach(card => {
+        const exam = new Date(card.dataset.date);
+        const diff = exam - now;
+        const el = card.querySelector('.countdown');
+
+        if (diff <= 0) {
+          el.textContent = 'Exam started / completed';
+          return;
+        }
+
+        const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+        const mins = Math.floor((diff / (1000 * 60)) % 60);
+
+        el.textContent = `⏳ ${days}d ${hours}h ${mins}m left`;
+      });
+    }
+
+    updateCountdowns();
+    setInterval(updateCountdowns, 60000);
+  </script>
+
+</body>
+</html>
